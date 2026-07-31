@@ -23,6 +23,13 @@
 
 pipeline{
     agent any
+     
+     environment {
+        Image_Name = "anjumunnisa/docker-md-demo"
+        Image_Tag = "latest"
+     }
+
+
     stages{
         stage('git checkout'){
             steps{
@@ -32,12 +39,16 @@ pipeline{
         stage("Building docker image"){
             steps{
                 echo "Building docker image using Dockerfile"
-                sh "docker build -t docker-md-demo:latest ."
+                sh "docker build -t $Image_Name:$Image_Tag ."
             }
         }
          stage("Pushing docker image to docker hub"){
             steps{
-                echo "Pushing docker image to Docker Hub"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    // sh "docker tag $Image_Name:$Image_Tag $DOCKER_USER/$Image_Name:$Image_Tag"
+                    sh "docker push $DOCKER_USER/$Image_Name:$Image_Tag"
+                }
             }
         }
         stage ("Deploying docker containers"){
