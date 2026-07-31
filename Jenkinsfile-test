@@ -27,6 +27,7 @@ pipeline{
      environment {
         Image_Name = "anjumunnisa/docker-md-demo"
         Image_Tag = "latest"
+        CONTAINER_NAME = "django-container"
      }
 
 
@@ -53,12 +54,21 @@ pipeline{
             }
         }
         stage ("Deploying docker containers"){
+             input{
+                message "Deploying Docker container to EC2 instance. Please confirm to proceed."
+                ok "Deploy"
+             }
+
             steps{
                 sh '''
                      docker pull $Image_Name:$Image_Tag
 
+                     docker stop $CONTAINER_NAME || true
+                     docker rm $CONTAINER_NAME || true
+
+
                     echo "Running Docker container on EC2 instance"
-                    docker run -d -p 8000:8000 $Image_Name:$Image_Tag
+                    docker run -d -p --name $CONTAINER_NAME 8000:8000 $Image_Name:$Image_Tag
                 '''
             }
         }
