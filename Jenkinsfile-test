@@ -58,7 +58,7 @@ pipeline{
                      docker pull $Image_Name:$Image_Tag
 
                     echo "Running Docker container on EC2 instance"
-                    docker run -d -p 8000:8000 $Image_Name:$Image_Tag"
+                    docker run -d -p 8000:8000 $Image_Name:$Image_Tag
                 '''
             }
         }
