@@ -40,5 +40,10 @@ pipeline{
                 echo "Pushing docker image to Docker Hub"
             }
         }
+        stage ("Deploying docker containers"){
+            steps{
+                echo "Deploying docker containers using docker-compose"
+            }
+        }
     }
 }
