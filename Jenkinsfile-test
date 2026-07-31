@@ -1,22 +1,44 @@
-pipeline {
+// pipeline {
+//     agent any
+
+//     stages {
+//         stage('checkout scm'){
+//             sh' checkoout scm'
+//         }
+
+//         stage ('docker build'){
+//             sh 'docker build -t demo-django-app:latest .' 
+//         }
+
+//         stage ('docker push to ECR') {
+//             sh 'docker push demo-django-app:latest'
+//         }
+
+//         stage (' deploy containers') {
+//             sh 'docker run -d -p 8000:8000 demo-django-app:latest'
+//         }
+//     }
+
+// }
+
+pipeline{
     agent any
-
-    stages {
-        stage('checkout scm'){
-            sh' checkoout scm'
+    stages{
+        stage('git checkout'){
+            steps{
+                echo "Checking out the code from Git repository"
+            }
         }
-
-        stage ('docker build'){
-            sh 'docker build -t demo-django-app:latest .' 
+        stage("Building docker image"){
+            steps{
+                echo "Building docker image using Dockerfile"
+                sh "docker build -t docker-md-demo:latest ."
+            }
         }
-
-        stage ('docker push to ECR') {
-            sh 'docker push demo-django-app:latest'
-        }
-
-        stage (' deploy containers') {
-            sh 'docker run -d -p 8000:8000 demo-django-app:latest'
+         stage("Pushing docker image to docker hub"){
+            steps{
+                echo "Pushing docker image to Docker Hub"
+            }
         }
     }
-
 }
