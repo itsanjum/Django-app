@@ -62,5 +62,11 @@ pipeline{
                 '''
             }
         }
+        stage ("Testing the webhook"){
+            steps{
+                echo "Testing the webhook -if webhook is working ,this stage will be executed after pushing the code automatically to the git repository"
+            }
+
+        }
     }
 }
