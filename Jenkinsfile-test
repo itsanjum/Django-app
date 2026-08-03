@@ -22,7 +22,7 @@
 // }
 
 pipeline{
-    agent anjum
+    agent label 'anjum'
      
      environment {
         Image_Name = "anjumunnisa/docker-md-demo"
