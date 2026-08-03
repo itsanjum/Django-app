@@ -22,7 +22,7 @@
 // }
 
 pipeline{
-    agent any
+    agent anjum
      
      environment {
         Image_Name = "anjumunnisa/docker-md-demo"
@@ -79,4 +79,9 @@ pipeline{
 
         }
     }
+    // post{
+//         always{
+//             email to: 'user@example.com'
+//         }
+//     }
 }
