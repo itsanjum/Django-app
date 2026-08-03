@@ -22,8 +22,11 @@
 // }
 
 pipeline{
-    agent label 'anjum'
-     
+    agent {
+        node{
+            label 'anjum'
+        }
+    } 
      environment {
         Image_Name = "anjumunnisa/docker-md-demo"
         Image_Tag = "latest"
